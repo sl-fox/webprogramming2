@@ -1,0 +1,17 @@
+<!DOCTYPE >
+<html>
+<head>
+    <script>
+        function process() {
+            let obj = document.getElementById("target");
+            alert(obj.value);
+        }
+    </script>
+</head>
+<body>
+    <form name="myform">
+        <input type="text" id="target" name="text1" value="test">
+        <input type="submit" value="제출" onclick="process()">
+    </form>
+</body>
+</html>

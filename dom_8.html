@@ -1,0 +1,19 @@
+<div id="div-01">Here is div-01</div>
+<div id="div-02">Here is div-02</div>
+
+<script type="text/javascript">
+  let el = document.getElementById("div-01").nextSibling,
+    i = 1;
+
+  console.log("Siblings of div-01:");
+
+  while (el) {
+    console.log(i + ". " + el.nodeName);
+    el = el.nextSibling;
+    i++;
+  }
+</script>
+
+/************************************************** 로드될 때 다음과 같이 콘솔에
+기록됩니다. : Siblings of div-01 1. #text 2. DIV 3. #text 4. SCRIPT
+**************************************************/
