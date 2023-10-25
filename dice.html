@@ -20,7 +20,10 @@
     </style>
     <script>
         function roll() {
-//
+            var randomNumber = Math.floor(Math.random() * 6) + 1;
+            
+            var diceElement = document.getElementById("dice");
+            diceElement.innerHTML = randomNumber;
         };
     </script>
 </head>

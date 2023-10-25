@@ -29,37 +29,80 @@
         }
     </style>
 </head>
-
+<!-- GPT -->
 <body>
     <h1>지뢰찾기</h1>
-    <table id=board>
+    <table id="board">
     </table>
-    <BUTTON onclick="genGrid();">새로운 게임</BUTTON>
+    <button onclick="genGrid();">새로운 게임</button>
     <script>
         let grid = document.getElementById("board");
         genGrid();
 
         function genGrid() {
             grid.innerHTML = "";
-            for (let i = 0; i < 8; i++) {
-                //
-                for (var j = 0; j < 8; j++) {
-                    //
-                    if (Math.random() < 0.3)
-                        mine.value = "true";
-                    else
-                        mine.value = "false";
+            for (let i = 0; i < 128; i++) {
+                let row = document.createElement("tr");
+
+                for (let j = 0; j < 128; j++) {
+                    let cell = document.createElement("td");
+                    cell.setAttribute("mine", Math.random() < 0.1);
+
+                    cell.addEventListener("click", function() {
+                        clickBox(this);
+                    });
+
+                    row.appendChild(cell);
                 }
-                cell.setAttributeNode(mine);
+                grid.appendChild(row);
             }
         }
 
+        function countMinesAround(cell) {
+            let mineCount = 0;
+            const rowIndex = cell.parentElement.rowIndex;
+            const cellIndex = cell.cellIndex;
+
+            for (let i = rowIndex - 1; i <= rowIndex + 1; i++) {
+                for (let j = cellIndex - 1; j <= cellIndex + 1; j++) {
+                    if (i >= 0 && i < 128 && j >= 0 && j < 128) {
+                        const neighborCell = grid.rows[i].cells[j];
+                        if (neighborCell.getAttribute("mine") === "true") {
+                            mineCount++;
+                        }
+                    }
+                }
+            }
+
+            return mineCount;
+        }
+
         function clickBox(cell) {
-            if (cell.getAttribute("mine") == "true") {
+            if (cell.className === "clicked") {
+                return; // 이미 열린 셀은 무시
+            }
+
+            cell.className = "clicked";
+
+            if (cell.getAttribute("mine") === "true") {
                 cell.className = "mine";
-                alert("게임이 종료되었습니다.");
+                alert("지뢰입니다.");
             } else {
-                cell.className = "clicked";
+                const minesAround = countMinesAround(cell);
+                if (minesAround > 0) {
+                    cell.textContent = minesAround;
+                } else {
+                    // 주변에 지뢰가 없을 때 주변 셀도 클릭
+                    const rowIndex = cell.parentElement.rowIndex;
+                    const cellIndex = cell.cellIndex;
+                    for (let i = rowIndex - 1; i <= rowIndex + 1; i++) {
+                        for (let j = cellIndex - 1; j <= cellIndex + 1; j++) {
+                            if (i >= 0 && i < 128 && j >= 0 && j < 128) {
+                                clickBox(grid.rows[i].cells[j]);
+                            }
+                        }
+                    }
+                }
             }
         }
     </script>
