@@ -41,10 +41,10 @@
 
         function genGrid() {
             grid.innerHTML = "";
-            for (let i = 0; i < 128; i++) {
+            for (let i = 0; i < 1024; i++) {
                 let row = document.createElement("tr");
 
-                for (let j = 0; j < 128; j++) {
+                for (let j = 0; j < 1024; j++) {
                     let cell = document.createElement("td");
                     cell.setAttribute("mine", Math.random() < 0.1);
 
@@ -65,7 +65,7 @@
 
             for (let i = rowIndex - 1; i <= rowIndex + 1; i++) {
                 for (let j = cellIndex - 1; j <= cellIndex + 1; j++) {
-                    if (i >= 0 && i < 128 && j >= 0 && j < 128) {
+                    if (i >= 0 && i < 1024 && j >= 0 && j < 1024) {
                         const neighborCell = grid.rows[i].cells[j];
                         if (neighborCell.getAttribute("mine") === "true") {
                             mineCount++;
@@ -97,7 +97,7 @@
                     const cellIndex = cell.cellIndex;
                     for (let i = rowIndex - 1; i <= rowIndex + 1; i++) {
                         for (let j = cellIndex - 1; j <= cellIndex + 1; j++) {
-                            if (i >= 0 && i < 128 && j >= 0 && j < 128) {
+                            if (i >= 0 && i < 1024 && j >= 0 && j < 1024) {
                                 clickBox(grid.rows[i].cells[j]);
                             }
                         }
@@ -107,5 +107,4 @@
         }
     </script>
 </body>
-
 </html>
